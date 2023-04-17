@@ -240,22 +240,38 @@ export function decorateBlock(block) {
  * @param {Element} block The block element
  * @returns {object} The block config
  */
+/**
+ * So, generally this function extract some data from the FIRST column in the table that
+ * considered block configuration.
+ * Theoretically, FIRST column should contain some configurations for each row.
+ * Custom parsing logic can be implemented here.
+ * Current implementation returns object where keys are formatted text content values of
+ * the FIRST columns for each row, and values are some data retrieved from the SECOND column.
+ */
 export function readBlockConfig(block) {
   const config = {};
+  // Select all table rows
   block.querySelectorAll(':scope > div').forEach((row) => {
+    // Check if row contain cells (columns)
     if (row.children) {
       const cols = [...row.children];
+      // Check if SECOND (first after config column) column contain some content
       if (cols[1]) {
         const col = cols[1];
+        // textContent of FIRST column formatted to class-name-format amd stored in name variable
         const name = toClassName(cols[0].textContent);
         let value = '';
+        // Check is there is <a> tags in SECOND (first after config column) column
         if (col.querySelector('a')) {
           const as = [...col.querySelectorAll('a')];
           if (as.length === 1) {
+            // If found single <a> tag
             value = as[0].href;
           } else {
+            // If found multiple <a> tags
             value = as.map((a) => a.href);
           }
+          // Check is there is <img> tags in SECOND (first after config column) column
         } else if (col.querySelector('img')) {
           const imgs = [...col.querySelectorAll('img')];
           if (imgs.length === 1) {
@@ -263,6 +279,7 @@ export function readBlockConfig(block) {
           } else {
             value = imgs.map((img) => img.src);
           }
+          // Check is there is <p> tags in SECOND (first after config column) column
         } else if (col.querySelector('p')) {
           const ps = [...col.querySelectorAll('p')];
           if (ps.length === 1) {
@@ -271,6 +288,7 @@ export function readBlockConfig(block) {
             value = ps.map((p) => p.textContent);
           }
         } else value = row.children[1].textContent;
+
         config[name] = value;
       }
     }
@@ -303,7 +321,8 @@ export function decorateSections(main) {
     /* process section metadata */
     const sectionMeta = section.querySelector('div.section-metadata');
     if (sectionMeta) {
-      const meta = readBlockConfig(sectionMeta);
+      // const meta = readBlockConfig(sectionMeta);
+      const meta = {};
       Object.keys(meta).forEach((key) => {
         if (key === 'style') {
           const styles = meta.style.split(',').map((style) => toClassName(style.trim()));
