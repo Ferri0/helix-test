@@ -107,14 +107,6 @@ async function loadLazy(doc) {
 
   if (window.location.pathname === '/product') {
     // 120, 77
-
-    window.product = await fetch('https://api.bigcommerce.com/stores/nw4gkbxtza/v3/catalog/products/120', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Auth-Token': '1kmrqrbkfbpac9n0nl1txm7c9jxnij4',
-      },
-    });
   }
 
   await loadBlocks(main);
