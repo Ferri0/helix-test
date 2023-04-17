@@ -1,0 +1,9 @@
+.multi-column {
+    padding: 50px;
+    border: 2px solid red;
+}
+
+.multi-column-row {
+    display: flex;
+    flex-direction: row;
+}
