@@ -106,7 +106,10 @@ async function loadLazy(doc) {
   await loadFooter(doc.querySelector('footer'));
 
   if (window.location.pathname === '/product') {
-    // 120, 77
+    const productId = window.location.search[window.location.search.length - 1];
+
+    window.product = await fetch(`https://dummyjson.com/products/${productId}`)
+      .then((res) => res.json());
   }
 
   await loadBlocks(main);
