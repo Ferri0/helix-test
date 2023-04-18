@@ -98,7 +98,7 @@ export function addFavIcon(href) {
  */
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
-  // await loadBlocks(main);
+  await loadBlocks(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
@@ -113,8 +113,6 @@ async function loadLazy(doc) {
     window.product = await fetch(`https://dummyjson.com/products/${productId}`)
       .then((res) => res.json());
   }
-
-  await loadBlocks(main);
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);
