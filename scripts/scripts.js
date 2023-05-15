@@ -107,13 +107,6 @@ async function loadLazy(doc) {
   await loadHeader(doc.querySelector('header'));
   await loadFooter(doc.querySelector('footer'));
 
-  if (window.location.pathname === '/product') {
-    const productId = window.location.search[window.location.search.length - 1];
-
-    window.product = await fetch(`https://dummyjson.com/products/${productId}`)
-      .then((res) => res.json());
-  }
-
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);
   sampleRUM('lazy');

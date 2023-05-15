@@ -1,4 +1,9 @@
-export default function decorate(block) {
+export default async function decorate(block) {
+  const productId = window.location.search[window.location.search.length - 1];
+
+  window.product = await fetch(`https://dummyjson.com/products/${productId}`)
+    .then((res) => res.json());
+
   const wrapper = document.createElement('div');
   wrapper.style.display = 'grid';
 
