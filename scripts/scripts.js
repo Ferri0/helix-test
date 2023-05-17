@@ -1,5 +1,3 @@
-import './apolloClient.js';
-
 import {
   sampleRUM,
   buildBlock,
