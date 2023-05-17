@@ -71,10 +71,13 @@ class Product {
       }),
     };
 
-    const data = await fetch('https://mage-demo.atwix.dev/graphql', options)
+    const OPEN_CONTAINER = 'https://mage-demo.atwix.dev/graphql';
+    const DEFAULT_CONTAINER = 'https://mage-demo.atwix.dev/graphql';
+
+    const data = await fetch(OPEN_CONTAINER, options)
       .then((res) => res.json()).catch((error) => console.log(error));
 
-    console.log(data);
+    console.log('Data fetched via GraphQL => ', data);
   }
 
   hydrateComponents() {
