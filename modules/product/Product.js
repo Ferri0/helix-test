@@ -38,40 +38,43 @@ class Product {
     this.data = await fetch(`https://dummyjson.com/products/${this.productId}`)
       .then((res) => res.json());
 
-    // const getProductsQuery = (keyword, pageSize = 5) => `{
-    //   products(search: "${keyword}", pageSize: ${pageSize}) {
-    //     total_count
-    //     items {
-    //       name
-    //       sku
-    //       price_range {
-    //         minimum_price {
-    //           regular_price {
-    //             value
-    //             currency
-    //           }
-    //         }
-    //       }
-    //     }
-    //     page_info {
-    //       page_size
-    //       current_page
-    //     }
-    //   }
-    // }`;
-    //
-    // const options = {
-    //   method: 'post',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     query: getProductsQuery('yoga'),
-    //   }),
-    // };
-    //
-    // this.data = await fetch('https://mage-demo.atwix.dev/graphql', options)
-    //   .then((res) => res.json());
+    // GraphQL version
+    const getProductsQuery = (keyword, pageSize = 5) => `{
+      products(search: "${keyword}", pageSize: ${pageSize}) {
+        total_count
+        items {
+          name
+          sku
+          price_range {
+            minimum_price {
+              regular_price {
+                value
+                currency
+              }
+            }
+          }
+        }
+        page_info {
+          page_size
+          current_page
+        }
+      }
+    }`;
+
+    const options = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: getProductsQuery('yoga'),
+      }),
+    };
+
+    const data = await fetch('https://mage-demo.atwix.dev/graphql', options)
+      .then((res) => res.json()).catch((error) => console.log(error));
+
+    console.log(data);
   }
 
   hydrateComponents() {
